@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/contents.css">
+    <link rel="icon" href="img/common/favicon.png" id="favicon">
+    <meta name="viewport" content="width=device-width">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Jost:wght@100..900&family=Noto+Sans+JP:wght@100..900&family=Roboto:wght@100;400;500;700;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- header -->
+    <header>
+    </header>
+
+    <!-- main -->
+    <main>
+        <div id="container">
+            <div class="wrap">
+                <div class="app">
+                    <div class="app__side">
+                        <section class="profile">
+                            <h2 class="profile__ttl">
+                                Profile
+                            </h2>
+                            <div class="profile__img">
+                                <div class="img">
+                                    <img src="img/profile-img01.png" alt="">
+                                </div>
+                            </div>
+                            <div class="profile__info">
+                                <p class="name">山田 太郎</p>
+                                <p class="birth">1990.01.01</p>
+                                <div class="meta">
+                                    <span class="dt">入社</span>
+                                    <span class="dd">2015.04</span>
+                                    <span class="dt">ステータス</span>
+                                    <span class="dd">プレイヤー</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="app__main">
+                        <ul class="switch">
+                            <li>
+                                <div class="unit-btn01">
+                                    <label class="inner">
+                                        <input type="radio" v-model="selectedTab" name="switch_radio" value="operation">
+                                        稼働実績
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="unit-btn01">
+                                    <label class="inner">
+                                        <input type="radio" v-model="selectedTab" name="switch_radio" value="annual">
+                                        年間実績
+                                    </label>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="unit-btn01">
+                                    <label class="inner">
+                                        <input type="radio" v-model="selectedTab" name="switch_radio" value="skill">
+                                        評価・スキル
+                                    </label>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <section class="dashboard">
+                            <!-- スキル評価表示 -->
+                            <div class="dashboard-content" id="skill-content" v-show="selectedTab === 'skill'">
+                                <div class="dashboard-content__item">
+                                    <div class="dashboard-content__header">
+                                        <h3 class="dashboard__title">評価・スキル</h3>
+                                        <div class="year-select">
+                                            <select v-model="selectedYear">
+                                                <option>2025</option>
+                                                <option>2024</option>
+                                                <option>2023</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="skill-metrics">
+                                        <div class="skill-metrics__item" >
+                                            <div class="label">スキル</div>
+                                            <div class="num">80</div>
+                                        </div>
+                                        <div class="skill-metrics__item" >
+                                            <div class="label">スキル</div>
+                                            <div class="num">80</div>
+                                        </div>
+                                        <div class="skill-metrics__item" >
+                                            <div class="label">スキル</div>
+                                            <div class="num">80</div>
+                                        </div>
+                                        <!-- <div class="skill-metrics__item" v-for="(metric, index) in skillData"
+                                            :key="index">
+                                            <div class="label">スキル</div>
+                                            <div class="num">80</div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 年間実績表示 -->
+                            <!-- 年間実績表示 -->
+                            <div class="dashboard-content" id="annual-content" v-show="selectedTab === 'annual'">
+                                <div class="dashboard-content__item">
+                                    <div class="dashboard-content__header">
+                                        <h3 class="dashboard__title">年間実績</h3>
+                                    </div>
+                                    <div class="annual-metrics">
+                                        <div class="metrics__list">
+                                            <div class="metric__item">
+                                                <div class="label">稼働日数</div>
+                                                <div class="value">{{ annualData.workingDays }}</div>
+                                            </div>
+                                            <div class="metric__item">
+                                                <div class="label">獲得件数合計</div>
+                                                <div class="value">{{ annualData.totalAcquisitions }}</div>
+                                            </div>
+                                            <div class="metric__item">
+                                                <div class="label">成約率</div>
+                                                <div class="value">{{ annualData.conversionRate }}</div>
+                                            </div>
+                                            <div class="metric__item">
+                                                <div class="label">目標達成率</div>
+                                                <div class="value">{{ annualData.targetAchievement }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 稼働実績表示 -->
+                            <div class="dashboard-content" id="operation-content" v-show="selectedTab === 'operation'">
+                                <div class="dashboard-content__item">
+                                    <div class="dashboard-content__header">
+                                        <h3 class="dashboard__title">稼働実績</h3>
+                                        <div class="year-select">
+                                            <select v-model="selectedYear">
+                                                <option v-for="sheet in sheetNames" :key="sheet" :value="sheet">
+                                                    {{ decodeURIComponent(sheet) }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="operation__average">
+                                        <h4 class="ttl">月別平均</h4>
+                                        <dl>
+                                            <dt>対応率</dt>
+                                            <dd>{{ operationAverage.responseRate }}</dd>
+                                            <dt>成約数</dt>
+                                            <dd>{{ operationAverage.contracts }}</dd>
+                                            <dt>成約率</dt>
+                                            <dd>{{ operationAverage.conversionRate }}</dd>
+                                            <dt>クレカ率</dt>
+                                            <dd>{{ operationAverage.cardRate }}</dd>
+                                            <dt>獲得件数平均（全数）</dt>
+                                            <dd>{{ operationAverage.totalAcquisitions }}件</dd>
+                                            <dt>獲得件数平均（換算）</dt>
+                                            <dd>{{ operationAverage.calculatedAcquisitions }}件</dd>
+                                        </dl>
+                                    </div>
+                                    <table class="operation__table">
+                                        <thead>
+                                            <tr>
+                                                <th>日付</th>
+                                                <th>曜日</th>
+                                                <th>出勤店舗</th>
+                                                <th>来客組数</th>
+                                                <th>対象外</th>
+                                                <th>応対数</th>
+                                                <th>成約率</th>
+                                                <th>クレカ率</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(record, index) in operationData" :key="index">
+                                                <td>{{ record.date }}</td>
+                                                <td>{{ record.day }}</td>
+                                                <td>{{ record.store }}</td>
+                                                <td>{{ record.customers }}</td>
+                                                <td>{{ record.excluded }}</td>
+                                                <td>{{ record.responses }}</td>
+                                                <td>{{ record.conversionRate }}</td>
+                                                <td>{{ record.cardRate }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- footer -->
+    <footer>
+    </footer>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/contents.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/ani-loading.js"></script>
+    <!-- gsap（アニメーション） -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+    <script src="js/ani-gsap.js"></script>
+
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    apiKey: "AIzaSyDxCeBHqiAzswtrFsTk6RKNISUvi9aMwWE", // APIキー
+                    spreadsheetId: "1YVQo0IDemhz2zEWyo7NEP0nJmNIuMJR5Ao1gAffIugs", // スプレッドシートID
+                    selectedTab: "operation", // 初期タブ選択
+                    employees: [
+                        { name: "花井", sheetId: "2025", role: "player" }, // role を追加: "leader"（リーダー）, "player"（プレイヤー）, "new_player"（3か月以内のプレイヤー）
+                        // { name: "佐藤 花子", sheetId: "Sheet2", role: "leader" }
+                    ],
+                    selectedEmployee: null, // 選択中の社員
+                    selectedYear: "", // 選択された年度
+                    sheetNames: [], // 取得したシート名を格納
+                    operationData: [], // 稼働実績データ
+                    operationAverage: {
+                        responseRate: "-",
+                        contracts: "-",
+                        conversionRate: "-",
+                        cardRate: "-",
+                        totalAcquisitions: "-",
+                        calculatedAcquisitions: "-"
+                    },
+                    skillData: [],  // スキルデータ
+                    annualData: {   // 年間実績データ
+                        workingDays: "0日",
+                        totalAcquisitions: "0件",
+                        conversionRate: "0%",
+                        targetAchievement: "0%"
+                    },
+                    isAnnualDataLoaded: false, // 年間データがロードされたかのフラグ
+                    allSheetsData: []  // 全シートのデータを格納
+                };
+            },
+            mounted() {
+                this.selectedEmployee = this.employees[0]; // 初期選択
+                this.fetchSheetNames().then(() => {
+                    this.fetchOperationData();
+                    this.fetchOperationSummaryData();
+                    this.fetchSkillData();
+                    this.fetchAllSheetsData(); // すべてのシートからデータを取得
+                });
+            },
+            watch: {
+                selectedEmployee() {
+                    this.fetchOperationData();
+                    this.fetchOperationSummaryData();
+                    this.fetchSkillData();
+                    this.fetchAllSheetsData();
+                },
+                selectedYear() {
+                    this.fetchOperationData();
+                    this.fetchOperationSummaryData();
+                },
+                selectedTab(newTab) {
+                    if (newTab === 'annual' && !this.isAnnualDataLoaded) {
+                        // 年間実績タブに切り替わった時にデータが未ロードなら取得
+                        this.fetchAllSheetsData();
+                    }
+                }
+            },
+            methods: {
+                // スプレッドシートからデータを取得する関数
+                async fetchData(sheetName, range) {
+                    try {
+                        const url = `https://sheets.googleapis.com/v4/spreadsheets/${this.spreadsheetId}/values/${sheetName}!${range}?key=${this.apiKey}`;
+
+                        const response = await fetch(url);
+                        const data = await response.json();
+                        return data.values || [];
+                    } catch (error) {
+                        console.error(`Error fetching data from ${sheetName}!${range}:`, error);
+                        return [];
+                    }
+                },
+                async fetchSheetNames() {
+                    const url = `https://sheets.googleapis.com/v4/spreadsheets/${this.spreadsheetId}?key=${this.apiKey}`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (data.sheets) {
+                        this.sheetNames = data.sheets.map(sheet => encodeURIComponent(sheet.properties.title)).slice(1);//1sheet目はとばす
+                        this.selectedYear = this.sheetNames[0] || ""; // 初期値を最初のシートに設定
+                    }
+                },
+                async fetchOperationData() {
+                    if (!this.selectedEmployee || !this.selectedYear) return;
+                    const sheetName = `${this.selectedYear}`;
+                    const data = await this.fetchData(sheetName, "A3:V33"); // 稼働データの範囲
+                    this.operationData = data.map(row => ({
+                        date: row[0] || "-",
+                        day: row[1] || "-",
+                        store: row[2] || "-",
+                        customers: row[3] || "-",
+                        excluded: row[4] || "-",
+                        responses: row[5] || "-",
+                        conversionRate: row[21] || "-",
+                        cardRate: row[18] || "-",
+                    }));
+                },
+                async fetchOperationSummaryData() {
+                    if (!this.selectedEmployee || !this.selectedYear) return;
+                    const sheetName = `${this.selectedYear}`;
+                    const data = await this.fetchData(sheetName, "A2:V2"); // 2行目のデータ取得
+
+                    if (data.length > 0) {
+                        const row = data[0]; // 2行目のデータ
+                        this.operationAverage = {
+                            responseRate: row[17] || "-",
+                            contracts: row[22] || "-",
+                            conversionRate: row[21] || "-",
+                            cardRate: row[18] || "-",
+                            totalAcquisitions: row[2] ? (row[19] / row[2]).toFixed(1) : "-",
+                            calculatedAcquisitions: row[2] ? (row[20] / row[2]).toFixed(1) : "-"
+                        };
+                    }
+                },
+                async fetchSkillData() {
+                    if (!this.selectedEmployee || !this.selectedYear) return;
+                    const sheetName = `${this.selectedYear}`;
+                    const data = await this.fetchData(sheetName, "A2:V33"); // スキルデータの範囲
+
+                    if (data && data.length > 0) {
+                        this.skillData = data.map(row => ({
+                            label: row[0] || "",
+                            value: row[1] || ""
+                        })).filter(item => item.label && item.value); // 空のデータをフィルタリング
+                    }
+                },
+                async fetchAllSheetsData() {
+                    console.log("全シートからデータを取得しています...");
+                    this.allSheetsData = [];
+                    const fetchPromises = [];
+
+                    for (const sheetName of this.sheetNames) {
+                        // 各シートのデータを非同期で取得
+                        const promise = (async () => {
+                            try {
+                                // 各シートのサマリーデータ取得（2行目）
+                                const summaryData = await this.fetchData(sheetName, "A2:V2");
+
+                                // 稼働データの取得（3行目以降）
+                                const operationData = await this.fetchData(sheetName, "A3:V33");
+
+                                if (summaryData.length > 0) {
+                                    return {
+                                        sheet: decodeURIComponent(sheetName),
+                                        summary: summaryData[0],
+                                        operation: operationData
+                                    };
+                                }
+                            } catch (error) {
+                                console.error(`シート ${sheetName} からのデータ取得でエラーが発生しました:`, error);
+                            }
+                            return null;
+                        })();
+
+                        fetchPromises.push(promise);
+                    }
+
+                    // 全てのPromiseが完了するのを待つ
+                    const results = await Promise.all(fetchPromises);
+                    this.allSheetsData = results.filter(result => result !== null);
+
+                    // 全シートのデータ取得後に年間実績を計算
+                    this.calculateAnnualData();
+                },
+                calculateAnnualData() {
+                    console.log("年間データを計算しています...");
+                    console.log("シートデータ:", this.allSheetsData);
+
+                    if (this.allSheetsData.length === 0) {
+                        console.warn("利用可能なシートデータがありません");
+                        return;
+                    }
+
+                    // 稼働日数の計算（全シートの有効なデータ行数をカウント）
+                    let totalWorkingDays = 0;
+                    let totalAcquisitions = 0;
+                    let totalMonths = 0; // 集計対象月数
+                    let conversionRateSum = 0; // 成約率の合計
+                    let targetValue = 0; // 目標値
+
+                    this.allSheetsData.forEach(sheetData => {
+                        console.log(`シート処理中: ${sheetData.sheet}`);
+                        totalMonths++;
+                        // 稼働日数：日付と出勤店舗が入力されている行数をカウント
+                        const workingDays = sheetData.operation.filter(row =>
+                            row[0] && row[0] !== "-" && row[0] !== "" &&
+                            row[2] && row[2] !== "-" && row[2] !== "" // 出勤店舗があるデータのみカウント
+                        ).length;
+
+                        totalWorkingDays += workingDays;
+                        console.log(`${sheetData.sheet}の稼働日数: ${workingDays}`);
+
+                        // サマリーデータの取得
+                        const summary = sheetData.summary;
+
+                        // 獲得件数の集計
+                        if (summary[19] && !isNaN(parseFloat(summary[19]))) {
+                            const acquisitions = parseFloat(summary[19]);
+                            totalAcquisitions += acquisitions;
+                            console.log(`${sheetData.sheet}の獲得件数: ${acquisitions}`);
+                        }
+
+                        // 成約率の集計（summary[21]から取得）
+                        if (summary[21] && !isNaN(parseFloat(summary[21]))) {
+                            const conversionRate = parseFloat(summary[21].replace('%', ''));
+                            conversionRateSum += conversionRate;
+                            console.log(`${sheetData.sheet}の成約率: ${conversionRate}%`);
+                        }
+
+                        // 役割に基づいた目標計算
+                        const role = this.selectedEmployee.role || "player"; // デフォルトはplayer
+                        
+                        // 役割に基づいて目標値を計算（新しい計算式）
+                        if (role === "leader") {
+                            targetValue = totalWorkingDays * 10; // リーダーの場合
+                        } else if (role === "new_player") {
+                            targetValue = totalWorkingDays * 8; // 新人プレイヤー（3か月以内）の場合
+                        } else {
+                            targetValue = totalWorkingDays * 9; // 通常プレイヤーの場合
+                        }
+                        console.log(`${sheetData.sheet} - 役割: ${role}, 獲得目標: ${targetValue}`);
+                    });
+
+                    // 成約率の計算（月ごとの成約率の平均）
+                    const averageConversionRate = totalMonths > 0 ?
+                        (conversionRateSum / totalMonths).toFixed(1) : "0";
+
+                    const targetAchievement = totalMonths > 0 ?
+                        (((150 * totalMonths) / targetValue) * 100).toFixed(1) : "0";
+
+                    
+                    console.log("年間データ計算結果:");
+                    console.log(`稼働日数: ${totalWorkingDays}`);
+                    console.log(`総獲得件数: ${totalAcquisitions}`);
+                    console.log(`平均成約率: ${averageConversionRate}%`);
+                    console.log(`目標達成率: ${targetAchievement}%`);
+
+                    // 年間実績データを更新
+                    this.annualData = {
+                        workingDays: `${totalWorkingDays}日`,
+                        totalAcquisitions: `${Math.round(totalAcquisitions)}件`,
+                        conversionRate: `${averageConversionRate}%`,
+                        targetAchievement: `${targetAchievement}%`
+                    };
+
+                    this.isAnnualDataLoaded = true;
+                    console.log("年間データを更新しました:", this.annualData);
+                }
+            }
+        }).mount("#container");
+    </script>
+</body>
+
+</html>

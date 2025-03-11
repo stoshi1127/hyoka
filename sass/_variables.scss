@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+$pc: 1100px;
+$tab: 770px;
+$sp: 480px;
+$minsp: 320px;
+
+
+@mixin pc {
+	@media (min-width: ($pc)) {
+		@content;
+	}
+}
+@mixin tab {
+	@media (max-width: ($tab)) {
+		@content;
+	}
+}
+@mixin sp {
+	@media (max-width: ($sp)) {
+		@content;
+	}
+}
+@mixin minsp {
+	@media (max-width: ($minsp)) {
+		@content;
+	}
+}
+@mixin hover {
+	@media (min-width: ($sp)) {
+		&:hover {
+      @content;
+    }
+	}
+}
+
