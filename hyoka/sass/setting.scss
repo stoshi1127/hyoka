@@ -1,0 +1,26 @@
+@function vw($size, $viewport: 780) {
+	@return $size / $viewport * 100 * 1vw;
+  }
+
+$base-font-color: #333;
+$base-background-color: #eeecf7;
+$base_blue: #044a96;
+$base_green: #289964;
+$base_orange: #e5352b;
+$base_red: #ec4d00;
+$base_gray: #5b5b5b;
+
+$font_roboto: "roboto","Noto Sans JP", serif;
+
+@mixin temp-deko1(){
+  background: #eeecf4;
+  box-shadow:  8px 8px 16px #d6d4de,
+       -8px -8px 16px #ffffff;
+}
+
+@mixin temp-boko1(){
+  background: #eeecf4;
+  box-shadow: inset 8px 8px 16px #d6d4de,
+              inset -8px -8px 16px #ffffff;
+}
+
