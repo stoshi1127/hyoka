@@ -99,6 +99,9 @@
             @include temp-boko1();
             border-radius: 50px;
             padding: 50px 40px;
+            &:not(:last-child){
+              margin-bottom: 50px;
+            }
             .dashboard-content__header {
               display: flex;
               justify-content: space-between;
@@ -160,11 +163,17 @@
                 align-items: center;
                 flex-direction: column;
                 filter: drop-shadow(8px 8px 16px #d6d4de) drop-shadow(-8px -8px 16px #ffffff);
+                .chart{
+                  position: absolute;
+                  width: 180px;
+                  height: auto;
+                  aspect-ratio: 1/1;
+                }
                 .label{
-                  font-size: 1.4rem;
+                  font-size: 1.6rem;
                 }
                 .num{
-                  font-size: 6rem;
+                  font-size: 4rem;
                   line-height: 1;
                   font-family: $font_roboto;
                 }
@@ -196,6 +205,13 @@
                   }
                   .value {
                   }
+                }
+              }
+
+              .annual-chart {
+                .chart{
+                  width: 100%;
+                  height: 300px;
                 }
               }
             }

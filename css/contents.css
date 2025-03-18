@@ -78,6 +78,8 @@
         box-shadow: inset 8px 8px 16px #d6d4de, inset -8px -8px 16px #ffffff;
         border-radius: 50px;
         padding: 50px 40px; }
+        #container .app .app__main .dashboard .dashboard-content .dashboard-content__item:not(:last-child) {
+          margin-bottom: 50px; }
         #container .app .app__main .dashboard .dashboard-content .dashboard-content__item .dashboard-content__header {
           display: flex;
           justify-content: space-between;
@@ -129,10 +131,15 @@
             align-items: center;
             flex-direction: column;
             filter: drop-shadow(8px 8px 16px #d6d4de) drop-shadow(-8px -8px 16px #ffffff); }
+            #container .app .app__main .dashboard .dashboard-content .dashboard-content__item .skill-metrics .skill-metrics__item .chart {
+              position: absolute;
+              width: 180px;
+              height: auto;
+              aspect-ratio: 1/1; }
             #container .app .app__main .dashboard .dashboard-content .dashboard-content__item .skill-metrics .skill-metrics__item .label {
-              font-size: 1.4rem; }
+              font-size: 1.6rem; }
             #container .app .app__main .dashboard .dashboard-content .dashboard-content__item .skill-metrics .skill-metrics__item .num {
-              font-size: 6rem;
+              font-size: 4rem;
               line-height: 1;
               font-family: "roboto", "Noto Sans JP", serif; }
         #container .app .app__main .dashboard .dashboard-content .dashboard-content__item .annual-metrics .metrics__list {
@@ -152,6 +159,9 @@
                 padding: 0 0.5em;
                 position: absolute;
                 right: 0; }
+        #container .app .app__main .dashboard .dashboard-content .dashboard-content__item .annual-metrics .annual-chart .chart {
+          width: 100%;
+          height: 300px; }
         #container .app .app__main .dashboard .dashboard-content .dashboard-content__item .operation__average {
           background: #eeecf4;
           box-shadow: 8px 8px 16px #d6d4de, -8px -8px 16px #ffffff;
